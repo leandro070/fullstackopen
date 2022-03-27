@@ -49,3 +49,55 @@ deactivate S
 
 Note over B: Browser executes the event handler that renders notes to display
 ```
+
+## Exercise 0.5: Single page app
+
+Create a diagram depicting the situation where the user goes to the single page app version of the notes app at https://studies.cs.helsinki.fi/exampleapp/spa.
+
+```mermaid
+sequenceDiagram
+participant B as Browser
+participant S as Server
+
+B->>S: [GET] https://studies.cs.helsinki.fi/exampleapp/spa
+activate S
+S-->>B: [HTTP code] 200 { HTML-code }
+deactivate S
+
+B->>S: [GET] https://studies.cs.helsinki.fi/exampleapp/main.css
+activate S
+S-->>B: [HTTP code] 200 { CSS-code }
+deactivate S
+
+B->>S: [GET] https://studies.cs.helsinki.fi/exampleapp/spa.js
+activate S
+S-->>B: [HTTP code] 200 { JS-code }
+deactivate S
+
+Note over B: Browser start executing js code that request JSON data from server
+
+B->>S: [GET] https://studies.cs.helsinki.fi/exampleapp/data.json
+activate S
+S-->>B: [{"content":"test","date":"2022-03-20T23:01:16.481Z"}, ...}]
+deactivate S
+
+Note over B: Browser executes the event handler that renders notes to display
+
+```
+
+## Exercise 0.6: New note
+
+Create a diagram depicting the situation where the user creates a new note using the single page version of the app.
+
+```mermaid
+sequenceDiagram
+participant B as Browser
+participant S as Server
+
+Note over B,S: The user wrote a note and sent it.
+B->>S: [POST] https://studies.cs.helsinki.fi/exampleapp/new_note_spa BODY: {"content":"hi","date":"2022-03-27T20:31:08.545Z"}
+activate S
+S-->>B: {"message":"note created"}
+deactivate S
+Note over B: Browser adds the note to the list
+```
